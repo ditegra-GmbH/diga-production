@@ -8,6 +8,7 @@ variables:
     CYPRESS_PERCY_USAGE: $CYPRESS_PERCY_USAGE
     PERCY_BUILD_NAME: '000'
     CYPRESS_shopwareRoot: $CI_PROJECT_DIR
+    CYPRESS_grepTags: '-quarantined'
 
 stages:
     - build
@@ -159,7 +160,6 @@ Static Analysis:
         - composer install -d .gitlab-ci/tools
         - php .gitlab-ci/tools/vendor/bin/ecs check --config easy-coding-standard.php
         - php .gitlab-ci/tools/vendor/bin/phpstan analyse
-        - php .gitlab-ci/tools/vendor/bin/psalm
 
 Tools unit test:
     stage: test
@@ -226,7 +226,7 @@ Install (Visual, EN):
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,usePercy=$CYPRESS_PERCY_USAGE
             --spec cypress/integration/recovery/installer/basic.spec.js
-        - timeout 5m npx percy exec -- cypress run
+        - timeout 20m npx percy exec -- cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,usePercy=$CYPRESS_PERCY_USAGE
             --spec "cypress/integration/recovery/visual/*"
@@ -268,7 +268,7 @@ Install (EN):
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0,retries=0 --headless
             --env expectedVersion=$TAG
             --spec cypress/integration/recovery/installer/basic.spec.js
-        - timeout 5m $(npm bin)/cypress run
+        - timeout 20m $(npm bin)/cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG
             --spec "cypress/integration/recovery/visual/*"
@@ -370,7 +370,7 @@ Manual Update (EN):
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG
             --spec cypress/integration/recovery/updater/manual-update.spec.js
-        - timeout 5m $(npm bin)/cypress run
+        - timeout 20m $(npm bin)/cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testDataUsage=true
             --spec cypress/integration/recovery/updater/validation/storefront.spec.js
@@ -407,7 +407,7 @@ Update (Mysql 8.0):
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG
             --spec cypress/integration/recovery/updater/auto-update.spec.js
-        - timeout 5m $(npm bin)/cypress run
+        - timeout 20m $(npm bin)/cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testDataUsage=true
             --spec "cypress/integration/recovery/updater/validation/*"
@@ -431,7 +431,7 @@ Update (Visual, DE):
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,usePercy=$CYPRESS_PERCY_USAGE,testBase="Update"
             --spec cypress/integration/recovery/updater/auto-update.spec.js
-        - timeout 5m npx percy exec -- cypress run
+        - timeout 20m npx percy exec -- cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testDataUsage=true,testBase="Update",locale="de-DE",usePercy=$CYPRESS_PERCY_USAGE
             --spec "cypress/integration/recovery/visual/*"
@@ -454,7 +454,7 @@ Update (DE):
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testBase="Update"
             --spec cypress/integration/recovery/updater/auto-update.spec.js
-        - timeout 5m $(npm bin)/cypress run
+        - timeout 20m $(npm bin)/cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testDataUsage=true,testBase="Update",locale="de-DE"
             --spec "cypress/integration/recovery/visual/*"
@@ -480,7 +480,7 @@ Update from latest:
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testBase="Update"
             --spec cypress/integration/recovery/updater/auto-update.spec.js
-        - timeout 5m $(npm bin)/cypress run
+        - timeout 20m $(npm bin)/cypress run
             --browser chrome --config baseUrl=http://localhost:8000,numTestsKeptInMemory=0 --headless
             --env expectedVersion=$TAG,testDataUsage=true,testBase="Update",locale="de-DE"
             --spec "cypress/integration/recovery/visual/*"
