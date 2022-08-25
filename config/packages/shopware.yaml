@@ -1,3 +1,12 @@
 shopware:
+    api:
+        max_limit: 1000
+        
     admin_worker:
-        enable_admin_worker: true
+        enable_admin_worker: false
+        
+    auto_update:
+        enabled: false # disable auto update
+    
+    mail:
+        update_mail_variables_on_send: false
