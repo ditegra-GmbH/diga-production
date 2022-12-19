@@ -1,5 +1,12 @@
 /auth.json
 
+.uniqueid.txt
+config/packages/sanoa-shop.json
+install.lock
+proddump19122022.sql
+public/.htaccess
+stock-update/
+
 custom/*
 !custom/plugins/.gitkeep
 !custom/static-plugins/
