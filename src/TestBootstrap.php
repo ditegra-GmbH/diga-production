@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
+use DG\BypassFinals;
 use Shopware\Core\Framework\Test\TestCaseBase\KernelLifecycleManager;
+use Shopware\Core\Kernel;
 use Symfony\Component\Dotenv\Dotenv;
 
 $_ENV['PROJECT_ROOT'] = $_SERVER['PROJECT_ROOT'] = $_SERVER['PROJECT_ROOT'] ?? dirname(__DIR__);
@@ -10,7 +12,7 @@ $testEnv = [
     'APP_ENV' => 'test',
     'APP_DEBUG' => 1,
     'APP_SECRET' => 's$cretf0rt3st',
-    'KERNEL_CLASS' => \Shopware\Production\Kernel::class,
+    'KERNEL_CLASS' => Kernel::class,
     'SHOPWARE_ES_ENABLED' => '',
     'BLUE_GREEN_DEPLOYMENT' => 1,
     'SHOPWARE_ES_INDEXING_ENABLED' => '',
@@ -50,6 +52,10 @@ chmod($jwtDir . '/private.pem', 0660);
 chmod($jwtDir . '/public.pem', 0660);
 
 $loader = require TEST_PROJECT_DIR . '/vendor/autoload.php';
+
+if (class_exists(BypassFinals::class)) {
+    BypassFinals::enable();
+}
 
 KernelLifecycleManager::prepare($loader);
 
